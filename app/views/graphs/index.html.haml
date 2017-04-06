@@ -1,22 +1,43 @@
 %h1
-  Awesome graph
+  Movie db queries.
+
+%div(style="width: 1400px; position: relative")
+  %div(style="float: left; width: 60%")
+    %textarea(rows="7" cols="100" style="margin: 5px 10px" data-query-label="#{params[:query]}")
+      = @queries[params[:query]]
+  %div(style="float: right; width: 40%")
+    sample queries:
+    - @queries.each do |label, query|
+      %a(href="/graphs?query=#{label}" class="js-query-link")
+        = label
+      &nbsp;
+
+%div(style="clear: both")
+  %br
 
 .graph
 
 %script{src: "https://d3js.org/d3.v4.js"}
 
 :javascript
-  var options = {
-    minCollision: 60,
-    neo4jDataUrl: 'api/data.json',
-    nodeRadius: 35,
-    onNodeDoubleClick: function(node) {
-      var maxNodes = 5,
-      data = neo4jd3.randomD3Data(node, maxNodes);
-      neo4jd3.updateWithD3Data(data);
-    },
-    icons: {},
-    zoomFit: false,
-    minCollision: 3*35
+  $(document).ready(function () {
+    renderGraph('#{params[:query]}');
+  });
+
+
+  function renderGraph(queryLabel) {
+    var options = {
+      minCollision: 60,
+      neo4jDataUrl: 'api/data.json?query=' + queryLabel,
+      nodeRadius: 35,
+      onNodeDoubleClick: function(node) {
+        var maxNodes = 5,
+        data = neo4jd3.randomD3Data(node, maxNodes);
+        neo4jd3.updateWithD3Data(data);
+      },
+      icons: {},
+      zoomFit: false,
+      minCollision: 3*35
+    }
+    var neo4jd3 = new Neo4jd3('.graph', options);
   }
-  var neo4jd3 = new Neo4jd3('.graph', options);

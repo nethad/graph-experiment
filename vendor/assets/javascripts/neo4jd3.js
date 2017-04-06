@@ -246,7 +246,6 @@ function Neo4jD3(_selector, _options) {
                    })
                    .html(function(d) {
                        var _icon = icon(d);
-                       console.log(d);
                        var value;
                        if (d.properties.name)
                            value = d.properties.name;
