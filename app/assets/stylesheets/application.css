@@ -13,4 +13,16 @@
  *= require neo4jd3
  *= require_tree .
  *= require_self
+
  */
+
+
+
+body, html {
+    height: 100%;
+    overflow: hidden;
+}
+.neo4jd3 {
+    height: 100%;
+    overflow: hidden;
+}
