@@ -9,12 +9,14 @@
   var options = {
     minCollision: 60,
     neo4jDataUrl: 'api/data.json',
-    nodeRadius: 25,
+    nodeRadius: 35,
     onNodeDoubleClick: function(node) {
       var maxNodes = 5,
       data = neo4jd3.randomD3Data(node, maxNodes);
       neo4jd3.updateWithD3Data(data);
     },
-    zoomFit: true
+    icons: {},
+    zoomFit: false,
+    minCollision: 3*35
   }
   var neo4jd3 = new Neo4jd3('.graph', options);
