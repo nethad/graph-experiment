@@ -1,0 +1,19 @@
+<h1>LOL</h1>
+
+.selector
+
+%script{src: "https://d3js.org/d3.v4.js"}
+
+:javascript
+  var options = {
+    minCollision: 60,
+    neo4jDataUrl: 'api/data.json',
+    nodeRadius: 25,
+    onNodeDoubleClick: function(node) {
+        var maxNodes = 5,
+            data = neo4jd3.randomD3Data(node, maxNodes);
+        neo4jd3.updateWithD3Data(data);
+    },
+    zoomFit: true
+  }
+  var neo4jd3 = new Neo4jd3('.selector', options);

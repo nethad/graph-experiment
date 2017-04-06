@@ -70,3 +70,6 @@ MATCH
 WHERE a.name = "Woody Allen" AND b.name = "Mia Farrow"
 RETURN a, b, m
 LIMIT 25
+
+MATCH (bacon:Person {name:"Kevin Bacon"})-[*1..3]-(hollywood)
+RETURN DISTINCT hollywood
