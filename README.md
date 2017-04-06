@@ -19,7 +19,6 @@ Good think is that they are "self-documented".
 For example if you create a new neo4j model and then you try to use it, you 
 may see an error like:
 
-
 ---
     Neo4j::DeprecatedSchemaDefinitionError:           Some schema elements were defined by the model (which is no longer supported), but they do not exist in the database.  Run the following to create them:
 
@@ -36,5 +35,11 @@ and that is exactly what you have to do.
 will create neo4j migration files in:
 
 `db/neo4j`
+
+Running
+
+`rake neo4j:migrate`
+
+the migration will be exectuted directly on the neo4j database
 
 
