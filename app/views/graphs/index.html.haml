@@ -11,9 +11,9 @@
     neo4jDataUrl: 'api/data.json',
     nodeRadius: 25,
     onNodeDoubleClick: function(node) {
-        var maxNodes = 5,
-            data = neo4jd3.randomD3Data(node, maxNodes);
-        neo4jd3.updateWithD3Data(data);
+      var maxNodes = 5,
+      data = neo4jd3.randomD3Data(node, maxNodes);
+      neo4jd3.updateWithD3Data(data);
     },
     zoomFit: true
   }

@@ -1,8 +1,67 @@
 class Api::DataController < ApplicationController
 
   def show
-    render json: json_data
+    # render json: json_data
+
+    # neo4j_session = Neo4j::Session.open(:server_db, 'http://localhost:7474')
+    # cypher = '
+    #   MATCH p=shortestPath(
+    #     (bacon:Person {name:"Kevin Bacon"})-[*]-(meg:Person {name:"Meg Ryan"})
+    #   )
+    #   RETURN p
+    # '
+    # render json: neo4j_session.query(cypher).to_json
+    #
+    #
+    # neo4j_session = Neo4j::Session.open(:server_db, 'http://localhost:7474')
+    # cypher = '
+    #   MATCH p=shortestPath(
+    #     (bacon:Person {name:"Kevin Bacon"})-[*]-(meg:Person {name:"Meg Ryan"})
+    #   )
+    #   RETURN p
+    # '
+    # neo4j_session.query(cypher)["data"].flatten
+    #
+    # 'http://localhost:7474/db/data/cypher'
+
+    conn = Faraday.new(:url => 'http://localhost:7474') do |faraday|
+      # faraday.request  :url_encoded             # form-encode POST params
+      faraday.response :logger                  # log requests to STDOUT
+      faraday.adapter  Faraday.default_adapter  # make requests with Net::HTTP
+    end
+
+    # json_post = '
+    #   {
+    #     "query" : "MATCH (bacon:Person {name:\"Kevin Bacon\"})-[*1..3]-(hollywood) RETURN DISTINCT hollywood",
+    #     "params" : {}
+    #   }
+    # '
+
+    json_post = '
+      {
+        "statements": [
+          {
+            "statement": "MATCH (bacon:Person {name:\"Kevin Bacon\"})-[*1..3]-(hollywood) RETURN DISTINCT hollywood",
+            "resultDataContents": ["row", "graph"]
+          }
+        ]
+      }
+    '
+
+    resp = conn.post do |req|
+      # req.url '/db/data/cypher'
+      req.url '/db/data/transaction/commit'
+      req.headers['Content-Type'] = 'application/json'
+      req.body = json_post
+    end
+
+    render json: resp.body
   end
+
+  # def show
+  #   neo4j_session = Neo4j::Session.open(:server_db, 'http://localhost:7474')
+  #   session.query(QUERY, json: json)
+  # end
 
   private
 
@@ -52,6 +111,12 @@ class Api::DataController < ApplicationController
       ],
       "errors": []
     }
+    '
+  end
+
+  def json_data2
+    '
+
     '
   end
 
