@@ -4,7 +4,7 @@ class Api::DataController < ApplicationController
 
   def show
     query_key = params[:query] || GraphsController::QUERIES.keys.first
-    response = execute_query(GraphsController::QUERIES[query_key.to_sym])
+    response = execute_query(GraphsController::QUERIES[query_key])
     render json: response.body
   end
 
