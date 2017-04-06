@@ -37,16 +37,18 @@ class Api::DataController < ApplicationController
     #   }
     # '
 
-    json_post = '
+    json_post =
       {
         "statements": [
           {
-            "statement": "MATCH (bacon:Person {name:\"Kevin Bacon\"})-[*1..3]-(hollywood) RETURN DISTINCT hollywood",
+            "statement": "MATCH p=shortestPath(
+                (bacon:Person {name:\"Kevin Bacon\"})-[*]-(meg:Person {name:\"Meg Ryan\"})
+              )
+              RETURN p",
             "resultDataContents": ["row", "graph"]
           }
         ]
-      }
-    '
+      }.to_json
 
     resp = conn.post do |req|
       # req.url '/db/data/cypher'

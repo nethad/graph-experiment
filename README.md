@@ -71,5 +71,10 @@ WHERE a.name = "Woody Allen" AND b.name = "Mia Farrow"
 RETURN a, b, m
 LIMIT 25
 
+MATCH p=shortestPath(
+  (bacon:Person {name:"Kevin Bacon"})-[*]-(meg:Person {name:"Meg Ryan"})
+)
+RETURN p
+
 MATCH (bacon:Person {name:"Kevin Bacon"})-[*1..3]-(hollywood)
 RETURN DISTINCT hollywood
