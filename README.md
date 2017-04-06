@@ -16,7 +16,7 @@ bin/rails s
 
 neo4j.rb comes with its own collection of rake tasks.
 Good think is that they are "self-documented".
-For example if you create a new neo4j model and then you try to use it, you 
+For example if you create a new neo4j model and then you try to use it, you
 may see an error like:
 
 ---
@@ -43,3 +43,30 @@ Running
 the migration will be exectuted directly on the neo4j database
 
 
+## Example queries
+
+MATCH (a:Actor)-[:ACTS_IN]-(m:Movie)
+WHERE a.name = "Tom Hanks"
+RETURN a, m
+LIMIT 25
+
+MATCH
+(a:Actor)-[:ACTS_IN]-(m:Movie),
+(a:Actor)-[:DIRECTED]-(m:Movie)
+WHERE a.name = "Tom Hanks"
+RETURN a, m
+LIMIT 25
+
+MATCH
+(a:Actor)-[:ACTS_IN]-(m:Movie),
+(a:Actor)-[:DIRECTED]-(m:Movie)
+WHERE a.name = "Woody Allen"
+RETURN a, m
+LIMIT 25
+
+MATCH
+(a:Director)-[:DIRECTED]-(m:Movie),
+(b:Actor)-[:ACTS_IN]-(m:Movie)
+WHERE a.name = "Woody Allen" AND b.name = "Mia Farrow"
+RETURN a, b, m
+LIMIT 25
